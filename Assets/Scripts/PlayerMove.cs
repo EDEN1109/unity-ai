@@ -5,6 +5,8 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
 
+    public Vector2 LastMoveDirection { get; private set; } = Vector2.up;
+
     private void Update()
     {
         Keyboard keyboard = Keyboard.current;
@@ -18,6 +20,11 @@ public class PlayerMove : MonoBehaviour
         if (keyboard.downArrowKey.isPressed) direction.y -= 1f;
 
         direction = direction.normalized;
+
+        if (direction != Vector2.zero)
+        {
+            LastMoveDirection = direction;
+        }
 
         transform.position += new Vector3(direction.x, direction.y, 0f) * moveSpeed * Time.deltaTime;
     }
